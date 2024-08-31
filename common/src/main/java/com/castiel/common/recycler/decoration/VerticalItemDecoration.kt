@@ -3,6 +3,7 @@ package com.castiel.common.recycler.decoration
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.blankj.utilcode.util.ConvertUtils
@@ -17,8 +18,7 @@ class VerticalItemDecoration constructor(
     left: Float,
     right: Float
 ) : ItemDecoration() {
-    private val mDivider: Drawable =
-        context.resources.getDrawable(drawable, null)
+    private val mDivider: Drawable? = ContextCompat.getDrawable(context,drawable)
     private val left: Int = ConvertUtils.dp2px(left)
     private val right: Int = ConvertUtils.dp2px(right)
 
@@ -31,9 +31,9 @@ class VerticalItemDecoration constructor(
             val child = parent.getChildAt(i)
             val params = child.layoutParams as RecyclerView.LayoutParams
             val top = child.bottom + params.bottomMargin
-            val bottom = top + mDivider.intrinsicHeight
-            mDivider.setBounds(left + this.left, top, right - this.right, bottom)
-            mDivider.draw(c)
+            val bottom = top + (mDivider?.intrinsicHeight ?: 0)
+            mDivider?.setBounds(left + this.left, top, right - this.right, bottom)
+            mDivider?.draw(c)
         }
     }
 

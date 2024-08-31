@@ -31,10 +31,12 @@ import kotlinx.android.synthetic.main.layout_floating.view.*
 import kotlinx.android.synthetic.main.layout_floating_location_adjust.view.*
 import kotlinx.android.synthetic.main.layout_floating_navi_adjust.view.*
 import okhttp3.internal.format
+import java.util.Locale
 
 /**
  * @author jiayu.liu
  */
+@SuppressLint("ClickableViewAccessibility")
 class FloatingViewManger private constructor() {
     private var windowManager: WindowManager =
         Utils.getApp().getSystemService(Service.WINDOW_SERVICE) as WindowManager
@@ -94,12 +96,11 @@ class FloatingViewManger private constructor() {
     /**
      * 悬浮窗添加
      */
-    @SuppressLint("ClickableViewAccessibility")
     fun addFloatViewToWindow() {
         if (isAddFloatingView) {
             return
         }
-        view = LayoutInflater.from(Utils.getApp()).inflate(R.layout.layout_floating, null)
+        view = LayoutInflater.from(Utils.getApp()).inflate(R.layout.layout_floating, ConstraintLayout(Utils.getApp()))
 
         view?.mapview?.onCreate(Utils.getApp(), null)
         view?.mapview?.showScaleControl(false)
@@ -251,11 +252,10 @@ class FloatingViewManger private constructor() {
     /**
      * 定位调整view
      */
-    @SuppressLint("ClickableViewAccessibility")
     private fun addAdjustLocationToWindow() {
         if (locationAdjust == null) {
             locationAdjust = LayoutInflater.from(Utils.getApp())
-                .inflate(R.layout.layout_floating_location_adjust, null)
+                .inflate(R.layout.layout_floating_location_adjust, ConstraintLayout(Utils.getApp()))
             locationAdjust?.rocker_view!!.setOnAngleChangeListener(object :
                 RockerView.OnAngleChangeListener {
                 private var currentTimeMillis: Long = 0L
@@ -302,11 +302,10 @@ class FloatingViewManger private constructor() {
     /**
      * 增加导航微调悬浮窗
      */
-    @SuppressLint("ClickableViewAccessibility")
     private fun addAdjustNaviToWindow() {
         if (naviAdjust == null) {
             naviAdjust = LayoutInflater.from(Utils.getApp())
-                .inflate(R.layout.layout_floating_navi_adjust, null)
+                .inflate(R.layout.layout_floating_navi_adjust, ConstraintLayout(Utils.getApp()))
 
 
             naviAdjust?.speed_nav_view!!.updateCurValue(MMKVUtils.getSpeed())
@@ -372,7 +371,7 @@ class FloatingViewManger private constructor() {
         params.packageName = AppUtils.getAppPackageName()
         params.width = WindowManager.LayoutParams.WRAP_CONTENT
         params.height = WindowManager.LayoutParams.WRAP_CONTENT
-        params.gravity = Gravity.LEFT or Gravity.TOP
+        params.gravity = Gravity.START or Gravity.TOP
         params.x = mScreenWidth - (view?.width ?: 0)
         params.y = mScreenHeight / 2 + ConvertUtils.dp2px(100f)
         //焦点问题  透明度
@@ -476,6 +475,7 @@ class FloatingViewManger private constructor() {
         //已加载到window中
         naviAdjust?.parent?.run {
             naviAdjust?.tv_nav_info!!.text = String.format(
+                Locale.ROOT,
                 "当前进度(道路)：%d/%d",
                 index,
                 size

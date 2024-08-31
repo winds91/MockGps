@@ -14,7 +14,7 @@ import java.util.concurrent.CopyOnWriteArrayList
  * @author jiayu.liu
  */
 object MMKVUtils {
-    private var defaultMMKV: MMKV = MMKV.defaultMMKV()
+    private var defaultMMKV: MMKV ?= MMKV.defaultMMKV()
     const val LOCATION_LIST_KEY: String = "LOCATION_LIST_KEY"
     const val MULTIPLE_NAVI_LIST_KEY: String = "Multiple_NAVI_LIST_KEY"
     const val NAVI_SPEED_KEY: String = "NAVI_SPEED_KEY"
@@ -43,7 +43,7 @@ object MMKVUtils {
             checkMockMessageModelIsExist(this, data)
             add(0, data)
 
-            defaultMMKV.putString(
+            defaultMMKV?.putString(
                 key, Gson().toJson(
                     if (size > MAX_SIZE) {
                         subList(0, MAX_SIZE)
@@ -51,17 +51,24 @@ object MMKVUtils {
                 )
             )
         } ?: kotlin.run {
-            defaultMMKV.putString(key, Gson().toJson(arrayListOf(data)))
+            defaultMMKV?.putString(key, Gson().toJson(arrayListOf(data)))
         }
     }
 
     fun getDataList(key: String): CopyOnWriteArrayList<MockMessageModel>? {
-        val naviStr = defaultMMKV.getString(key, "")
+        val naviStr = defaultMMKV?.getString(key, "")
         if (naviStr?.isNotEmpty() == true) {
             val type: Type = object : TypeToken<CopyOnWriteArrayList<MockMessageModel?>?>() {}.type
             return Gson().fromJson(naviStr, type)
         }
         return null
+    }
+
+    /**
+     * 清除历史记录
+     */
+    fun clearDataList(key: String) {
+        defaultMMKV?.putString(key, "[]")
     }
 
     private fun checkMockMessageModelIsExist(
@@ -80,32 +87,32 @@ object MMKVUtils {
      * 设置导航速度
      */
     fun setSpeed(speed: Int) {
-        defaultMMKV.putInt(NAVI_SPEED_KEY, speed)
+        defaultMMKV?.putInt(NAVI_SPEED_KEY, speed)
     }
 
     /**
      * 获取导航速度
      */
     fun getSpeed(): Int {
-        return defaultMMKV.getInt(NAVI_SPEED_KEY, 60)
+        return defaultMMKV?.getInt(NAVI_SPEED_KEY, 60) ?: 60
     }
 
     /**
      * 引导页展示标识
      */
     fun setGuideVisible(visible: Boolean) {
-        defaultMMKV.putBoolean("isGuideVisible", visible)
+        defaultMMKV?.putBoolean("isGuideVisible", visible)
     }
 
     /**
      * 获取引导页展示标识
      */
     fun isGuideVisible(): Boolean {
-        return defaultMMKV.getBoolean("isGuideVisible", false)
+        return defaultMMKV?.getBoolean("isGuideVisible", false) ?: false
     }
 
     fun getSettingModel(): SettingModel {
-        val json = defaultMMKV.getString(KEY_SETTING, "")
+        val json = defaultMMKV?.getString(KEY_SETTING, "")
         if (json?.isNotEmpty() == true) {
             return GsonUtils.fromJson(json, SettingModel::class.java)
         }
@@ -120,7 +127,7 @@ object MMKVUtils {
                 KEY_NAVI_ROUTE_BINDING -> settingModel.isNaviRouteBinding = switch
                 else -> {}
             }
-            defaultMMKV.putString(KEY_SETTING, GsonUtils.toJson(settingModel))
+            defaultMMKV?.putString(KEY_SETTING, GsonUtils.toJson(settingModel))
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -1,9 +1,9 @@
 package com.huolala.mockgps.adaper
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.huolala.mockgps.R
@@ -47,6 +47,7 @@ class SettingAdapter : RecyclerView.Adapter<SettingAdapter.ViewHolder>() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun submitList(list: List<SettingMsgModel>) {
         this.list.clear()
         this.list.addAll(list)

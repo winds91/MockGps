@@ -8,7 +8,6 @@ import android.os.Message
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -23,7 +22,6 @@ import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener
 import com.baidu.mapapi.search.sug.SuggestionResult
 import com.baidu.mapapi.search.sug.SuggestionSearch
 import com.baidu.mapapi.search.sug.SuggestionSearchOption
-import com.blankj.utilcode.util.ClickUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.castiel.common.base.BaseActivity
@@ -37,6 +35,7 @@ import com.huolala.mockgps.manager.MapLocationManager
 import com.huolala.mockgps.model.PoiInfoType
 import kotlinx.android.synthetic.main.activity_pick.*
 import java.lang.ref.WeakReference
+import java.util.Locale
 
 
 /**
@@ -113,7 +112,10 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
                         poiInfoType
                     )
                     tv_poi_name.text = key
-                    tv_lonlat.text = pt?.toString()
+                    tv_lonlat.text = String.format(
+                        Locale.ROOT,
+                        "经纬度：%f, %f", (pt?.longitude ?: 0f), (pt?.latitude ?: 0f)
+                    )
                     editViewShow(false)
                     mHandler = null
                     changeCenterLatLng(pt.latitude, pt.longitude)
@@ -173,7 +175,7 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
                     if (error != SearchResult.ERRORNO.NO_ERROR) {
                         Toast.makeText(
                             this@PickMapPoiActivity,
-                            "逆地理编码失败",
+                            "逆地理编码失败：" + error,
                             Toast.LENGTH_SHORT
                         )
                             .show()
@@ -182,7 +184,7 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
 
                     //详细地址
                     reverseGeoCodeResult.poiList?.run {
-                        if (!isEmpty()) {
+                        if (isNotEmpty()) {
                             val poiInfo = get(0)
                             mPoiInfoModel = PoiInfoModel(
                                 location,
@@ -190,8 +192,16 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
                                 poiInfo?.name,
                                 poiInfoType
                             )
-                            tv_poi_name.text = poiInfo?.name
-                            tv_lonlat.text = poiInfo?.location?.toString()
+                            var name = poiInfo?.name ?: ""
+                            if (poiInfo?.address != null && poiInfo.address.isNotEmpty()) {
+                                name += ("(" + poiInfo.address + ")")
+                            }
+                            tv_poi_name.text = name
+                            val latLng = mPoiInfoModel?.latLng
+                            tv_lonlat.text = String.format(
+                                Locale.ROOT,
+                                "经纬度：%f, %f", (latLng?.longitude ?: 0f), (latLng?.latitude ?: 0f)
+                            )
                         }
                     }
                 }
@@ -205,7 +215,10 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
             latLng?.run {
                 mPoiInfoModel = this@model
                 tv_poi_name.text = this@model.name
-                tv_lonlat.text = this@model.latLng.toString()
+                tv_lonlat.text = String.format(
+                    Locale.ROOT,
+                    "经纬度：%f, %f", (this@model.latLng?.longitude ?: 0f), (this@model.latLng?.latitude ?: 0f)
+                )
                 editViewShow(false)
                 mHandler = null
                 changeCenterLatLng(latitude, longitude)

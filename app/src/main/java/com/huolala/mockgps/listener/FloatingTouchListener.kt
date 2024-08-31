@@ -1,6 +1,7 @@
 package com.huolala.mockgps.listener
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
@@ -26,6 +27,7 @@ class FloatingTouchListener(
     var callBack: FloatingTouchCallBack? = null
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(view: View?, event: MotionEvent?): Boolean {
         var curTouchView = view
         if (touchView != null) {

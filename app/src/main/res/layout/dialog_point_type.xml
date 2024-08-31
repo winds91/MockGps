@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="HardcodedText">
 
     <data>
         <variable
@@ -11,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_round_5_color_white">
+        android:background="@drawable/shape_round_5_n_color_white">
 
         <com.castiel.common.widget.BoldTextView
             android:id="@+id/tv_title"
@@ -20,7 +22,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="经纬度类型"
-            android:textColor="@color/black"
+            android:textColor="@color/n_black"
             android:textSize="15sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

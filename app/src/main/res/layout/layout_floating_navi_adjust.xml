@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/shape_round_5_color_black_30"
     android:minWidth="200dp"
-    android:minHeight="100dp">
+    android:minHeight="100dp"
+    tools:ignore="SmallSp,HardcodedText">
 
 
     <androidx.appcompat.widget.AppCompatImageView

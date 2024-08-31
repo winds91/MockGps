@@ -40,7 +40,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding, BaseViewModel>() {
         dataBinding.recycler.addItemDecoration(
             VerticalItemDecoration(
                 this,
-                R.drawable.shape_item_line_verticall,
+                com.castiel.common.R.drawable.shape_item_line_verticall,
                 10f,
                 0f
             )

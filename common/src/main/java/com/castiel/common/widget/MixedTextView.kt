@@ -4,9 +4,7 @@ import android.content.Context
 import android.graphics.Paint
 import android.text.TextUtils
 import android.util.AttributeSet
-import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
-import com.blankj.utilcode.util.LogUtils
 
 /**
  * 中英文混排自动换行
@@ -17,7 +15,7 @@ import com.blankj.utilcode.util.LogUtils
 open class MixedTextView : AppCompatTextView {
     private var mEnabled = true
 
-    constructor(context: Context?) : super(context!!) {}
+    constructor(context: Context?) : super(context!!)
     constructor(context: Context?, attrs: AttributeSet?) : super(
         context!!, attrs
     )

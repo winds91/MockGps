@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import android.text.TextUtils
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -15,16 +14,14 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.route.DrivingRouteLine
-import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.castiel.common.base.BaseActivity
-import com.google.android.material.appbar.AppBarLayout
 import com.huolala.mockgps.R
 import com.huolala.mockgps.adaper.MainAdapter
 import com.huolala.mockgps.adaper.MultiplePoiAdapter
@@ -42,6 +39,7 @@ import com.huolala.mockgps.viewmodel.HomeViewModel
 import com.huolala.mockgps.widget.GuideView
 import com.huolala.mockgps.widget.MapSelectDialog
 import com.huolala.mockgps.widget.NaviPopupWindow
+import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -214,17 +212,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, HomeViewModel>(), View.On
             }
         }
 
-        dataBinding.appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+        dataBinding.appBarLayout.addOnOffsetChangedListener {appBarLayout, verticalOffset ->
             appBarLayout?.run {
                 val scale = abs(verticalOffset * 1.0f / appBarLayout.totalScrollRange)
-                val params =
-                    dataBinding.recycler.layoutParams as ViewGroup.MarginLayoutParams
+                val params = dataBinding.recycler.layoutParams as ViewGroup.MarginLayoutParams
                 val topMarginOffsetValue = (topMarginOffset * (1 - scale)).roundToInt()
                 val topMarginValue = (topMargin * scale).roundToInt()
                 params.topMargin = topMarginOffsetValue + topMarginValue
                 dataBinding.recycler.layoutParams = params
             }
-        })
+        }
     }
 
     private fun goToMockLocation(
@@ -270,7 +267,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, HomeViewModel>(), View.On
             if (!PermissionUtils.isGranted(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
                 if (locationAlwaysView == null) {
                     locationAlwaysView = LayoutInflater.from(this)
-                        .inflate(R.layout.layout_location_always_allow, null)
+                        .inflate(R.layout.layout_location_always_allow, ConstraintLayout(this))
                     locationAlwaysView?.let {
                         it.findViewById<View>(R.id.btn_skip)?.setOnClickListener {
                             val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -333,6 +330,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, HomeViewModel>(), View.On
                         it.name
                     )
                     adapter.dataBinding.includeLocationCard.tvLocationLatlng.text = String.format(
+                        Locale.ROOT,
                         "经纬度：%f , %f",
                         it.latLng?.longitude, it.latLng?.latitude
                     )
@@ -375,7 +373,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, HomeViewModel>(), View.On
 
             adapter.dataBinding.includeLocationCard.btnStartLocation -> {
                 if (adapter.dataBinding.includeLocationCard.tvLocationLatlng.tag == null) {
-                    Toast.makeText(this@MainActivity, "模拟位置不能为null", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@MainActivity, "模拟位置不能为空", Toast.LENGTH_SHORT)
                         .show()
                     return
                 }
@@ -433,7 +431,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, HomeViewModel>(), View.On
                 val currentList = poiAdapter.currentList()
                 for (poiInfoModel in currentList) {
                     if (poiInfoModel.latLng == null) {
-                        ToastUtils.showShort("模拟位置不能为null")
+                        ToastUtils.showShort("模拟位置不能为空")
                         return
                     }
                 }
@@ -458,7 +456,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, HomeViewModel>(), View.On
                         startNavi.latLng!!,
                         endNavi.latLng!!,
                         adapter.dataBinding.includeNaviCard.radioMultiRoute.isChecked,
-                        if (wayList.isNotEmpty()) wayList else null
+                        wayList.ifEmpty { null }
                     )
                 }
             }
@@ -470,7 +468,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, HomeViewModel>(), View.On
                 }
             }
 
-            dataBinding.ivAppUpdate -> {
+            /*dataBinding.ivAppUpdate -> {
                 viewModel.updateApp.value?.let {
                     val dialog: AlertDialog = AlertDialog.Builder(this)
                         .setTitle("有新的版本")
@@ -495,6 +493,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, HomeViewModel>(), View.On
                         .create()
                     dialog.setCanceledOnTouchOutside(false)
                     dialog.show()
+                }
+            }*/
+
+            adapter.dataBinding.btnHistoryClear -> {
+                //清除记录
+                MMKVUtils.clearDataList(
+                    if (adapter.dataBinding.includeLocationCard.llLocationCard.visibility == View.VISIBLE) MMKVUtils.LOCATION_LIST_KEY
+                    else MMKVUtils.MULTIPLE_NAVI_LIST_KEY
+                ).let {
+                    adapter.submitList(arrayListOf())
                 }
             }
 

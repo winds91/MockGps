@@ -1,5 +1,6 @@
 package com.castiel.common.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.constant.RefreshState
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle
 
+@SuppressLint("RestrictedApi")
 class MsbRefreshHeader(context: Context) : LinearLayout(context), RefreshHeader {
 
 

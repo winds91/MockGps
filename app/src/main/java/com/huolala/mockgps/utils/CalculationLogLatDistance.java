@@ -1,14 +1,5 @@
 package com.huolala.mockgps.utils;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.asin;
-import static java.lang.Math.atan2;
-import static java.lang.Math.cos;
-import static java.lang.Math.pow;
-import static java.lang.Math.sin;
-import static java.lang.Math.sqrt;
-import static java.lang.Math.tan;
-
 import com.baidu.mapapi.model.LatLng;
 
 /**
@@ -44,8 +35,7 @@ public class CalculationLogLatDistance {
 
         do {
             double sinLambda = Math.sin(lambda), cosLambda = Math.cos(lambda);
-            sinSigma = Math.sqrt((cosU2 * sinLambda) * (cosU2 * sinLambda) +
-                    (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda));
+            sinSigma = Math.sqrt(Math.pow(cosU2 * sinLambda, 2) + Math.pow(cosU1 * sinU2 - sinU1 * cosU2 * cosLambda, 2));
 
             // co-incident points
             if (sinSigma == 0) {
@@ -55,7 +45,7 @@ public class CalculationLogLatDistance {
             cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLambda;
             sigma = Math.atan2(sinSigma, cosSigma);
             sinAlpha = cosU1 * cosU2 * sinLambda / sinSigma;
-            cos2Alpha = 1 - sinAlpha * sinAlpha;
+            cos2Alpha = 1 - Math.pow(sinAlpha, 2);
             cos2SigmaM = cosSigma - 2 * sinU1 * sinU2 / cos2Alpha;
 
             // equatorial line
@@ -67,7 +57,7 @@ public class CalculationLogLatDistance {
             lambdaP = lambda;
             lambda = L + (1 - C) * f * sinAlpha *
                     (sigma + C * sinSigma * (cos2SigmaM + C * cosSigma *
-                            (-1 + 2 * cos2SigmaM * cos2SigmaM)));
+                            (-1 + 2 * Math.pow(cos2SigmaM, 2))));
 
         } while (Math.abs(lambda - lambdaP) > 1e-12 && --iterLimit > 0);
 
@@ -76,13 +66,13 @@ public class CalculationLogLatDistance {
             return Double.NaN;
         }
 
-        double uSq = cos2Alpha * (a * a - b * b) / (b * b);
+        double uSq = cos2Alpha * (Math.pow(a, 2) - Math.pow(b, 2)) / Math.pow(b, 2);
         double A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
         double B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
         double deltaSigma = B * sinSigma * (cos2SigmaM + B / 4 *
-                (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) -
-                        B / 6 * cos2SigmaM * (-3 + 4 * sinSigma * sinSigma) *
-                                (-3 + 4 * cos2SigmaM * cos2SigmaM)));
+                (cosSigma * (-1 + 2 * Math.pow(cos2SigmaM, 2)) -
+                        B / 6 * cos2SigmaM * (-3 + 4 * Math.pow(sinSigma, 2)) *
+                                (-3 + 4 * Math.pow(cos2SigmaM, 2))));
 
         double s = b * A * (sigma - deltaSigma);
         // 距离，单位：米
@@ -136,13 +126,13 @@ public class CalculationLogLatDistance {
         double cosAlpha1 = Math.cos(alpha1);
 
         double tanU1 = (1 - f) * Math.tan(lat1);
-        double cosU1 = 1 / Math.sqrt(1 + tanU1 * tanU1);
+        double cosU1 = 1 / Math.sqrt(1 + Math.pow(tanU1, 2));
         double sinU1 = tanU1 * cosU1;
 
         double sigma1 = Math.atan2(tanU1, cosAlpha1);
         double sinAlpha = cosU1 * sinAlpha1;
         double cos2Alpha = 1 - sinAlpha * sinAlpha;
-        double uSq = cos2Alpha * (a * a - b * b) / (b * b);
+        double uSq = cos2Alpha * (Math.pow(a, 2) - Math.pow(b, 2)) / Math.pow(b, 2);
         double A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
         double B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
 
@@ -155,8 +145,8 @@ public class CalculationLogLatDistance {
             cos2SigmaM = Math.cos(2 * sigma1 + sigma);
             sinSigma = Math.sin(sigma);
             cosSigma = Math.cos(sigma);
-            deltaSigma = B * sinSigma * (cos2SigmaM + B / 4 * (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)
-                    - B / 6 * cos2SigmaM * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2SigmaM * cos2SigmaM)));
+            deltaSigma = B * sinSigma * (cos2SigmaM + B / 4 * (cosSigma * (-1 + 2 * Math.pow(cos2SigmaM, 2))
+                    - B / 6 * cos2SigmaM * (-3 + 4 * Math.pow(sinSigma, 2)) * (-3 + 4 * Math.pow(cos2SigmaM, 2))));
             sigmaP = sigma;
             sigma = dist / (b * A) + deltaSigma;
         }
@@ -168,7 +158,7 @@ public class CalculationLogLatDistance {
                 cosU1 * cosSigma - sinU1 * sinSigma * cosAlpha1);
         double C = f / 16 * cos2Alpha * (4 + f * (4 - 3 * cos2Alpha));
         double L = lambda - (1 - C) * f * sinAlpha *
-                (sigma + C * sinSigma * (cos2SigmaM + C * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
+                (sigma + C * sinSigma * (cos2SigmaM + C * cosSigma * (-1 + 2 * Math.pow(cos2SigmaM, 2))));
 
         double lon2 = lon1 + L;
 

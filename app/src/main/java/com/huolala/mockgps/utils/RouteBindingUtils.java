@@ -47,7 +47,7 @@ public class RouteBindingUtils {
         double d = lon2 - lon1;
 
         double dot = a * c + b * d;
-        double lenSq = c * c + d * d;
+        double lenSq = Math.pow(c, 2) + Math.pow(d, 2);
         double param = dot / lenSq;
 
         if (param < 0) {
@@ -67,11 +67,10 @@ public class RouteBindingUtils {
         double R = 6378137.0; // 地球半径（米）
         double dLat = lat2 - lat1;
         double dLon = lon2 - lon1;
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        double a = Math.pow(Math.sin(dLat / 2), 2) +
                 Math.cos(lat1) * Math.cos(lat2) *
-                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                        Math.pow(Math.sin(dLon / 2), 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = R * c;
-        return distance;
+        return R * c;
     }
 }

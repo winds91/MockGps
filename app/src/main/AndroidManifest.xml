@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.huolala.mockgps">
+    tools:ignore="DiscouragedApi,LockedOrientationActivity">
 
     <!--允许程序访问WiFi网络信息-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -28,12 +28,14 @@
     <application
         android:name=".MyApp"
         android:allowBackup="true"
+        android:exported="false"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MockGps">
+        android:theme="@style/Theme.MockGps"
+        tools:ignore="DataExtractionRules">
 
         <meta-data
             android:name="design_width_in_dp"
@@ -49,13 +51,13 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
+            android:exported="false"
             android:process=":remote" />
 
         <activity
             android:name=".ui.GuideActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -66,39 +68,32 @@
         <activity
             android:name=".ui.MockLocationActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.PickMapPoiActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            tools:ignore="LockedOrientationActivity" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ExpandActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.FileMockActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.CalculateRouteActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.SettingActivity"
             android:exported="false"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".server.GpsService"

@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.blankj.utilcode.util.ConvertUtils
 import com.huolala.mockgps.R
@@ -54,7 +55,7 @@ class SimpleDividerDecoration(
     }
 
     init {
-        dividerPaint.color = context.resources.getColor(color)
+        dividerPaint.color = ContextCompat.getColor(context, color)
         dividerHeight = ConvertUtils.dp2px(height)
     }
 }

@@ -10,7 +10,14 @@
         <item name="colorSecondaryVariant">@color/master_color_80</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="editTextStyle">
+        <!--选中时下划线的颜色-->
+        <item name="colorControlActivated">@color/master_color_80</item>
+        <!--默认时下划线的颜色-->
+        <item name="colorControlNormal">@color/black_30</item>
     </style>
 </resources>

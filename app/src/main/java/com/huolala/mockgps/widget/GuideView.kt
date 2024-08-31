@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.setPadding
 import com.blankj.utilcode.util.ClickUtils
 import com.blankj.utilcode.util.ColorUtils
 import com.huolala.mockgps.R

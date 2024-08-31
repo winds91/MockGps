@@ -97,7 +97,7 @@ class FileMockActivity : BaseActivity<ActivityFileBinding, BaseViewModel>(), Vie
             dataBinding.btnStartNavi -> {
                 val text = dataBinding.edFile.text
                 if (TextUtils.isEmpty(text)) {
-                    ToastUtils.showShort("路径不能为null")
+                    ToastUtils.showShort("路径不能为空")
                     return
                 }
                 Utils.checkFloatWindow(this).let { it ->

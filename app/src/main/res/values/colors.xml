@@ -10,5 +10,9 @@
     <color name="black_30">#4D000000</color>
     <color name="grey">#FFbfbfbf</color>
     <color name="grey_50">#80bfbfbf</color>
-
+    <color name="n_white">#FFFFFFFF</color>
+    <color name="n_black">#FF000000</color>
+    <color name="n_black_50">#80000000</color>
+    <color name="n_black_80">#CC000000</color>
+    <color name="n_background_color">#FFFFFFFF</color>
 </resources>

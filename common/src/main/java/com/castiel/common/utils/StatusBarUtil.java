@@ -1,5 +1,6 @@
 package com.castiel.common.utils;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -22,6 +23,7 @@ import com.castiel.common.R;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+@SuppressLint("ObsoleteSdkInt, DiscouragedApi, InternalInsetResource")
 public class StatusBarUtil {
 
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
@@ -89,10 +91,10 @@ public class StatusBarUtil {
                                             @IntRange(from = 0, to = 255) int statusBarAlpha) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 
-            ViewGroup contentView = ((ViewGroup) activity.findViewById(android.R.id.content));
+            ViewGroup contentView = activity.findViewById(android.R.id.content);
             View rootView = contentView.getChildAt(0);
             int statusBarHeight = getStatusBarHeight(activity);
-            if (rootView != null && rootView instanceof CoordinatorLayout) {
+            if (rootView instanceof CoordinatorLayout) {
                 final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) rootView;
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     coordinatorLayout.setFitsSystemWindows(false);
@@ -100,12 +102,7 @@ public class StatusBarUtil {
                     boolean isNeedRequestLayout = contentView.getPaddingTop() < statusBarHeight;
                     if (isNeedRequestLayout) {
                         contentView.setPadding(0, statusBarHeight, 0, 0);
-                        coordinatorLayout.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                coordinatorLayout.requestLayout();
-                            }
-                        });
+                        coordinatorLayout.post(coordinatorLayout::requestLayout);
                     }
                 } else {
                     coordinatorLayout.setStatusBarBackgroundColor(calculateStatusColor(color, statusBarAlpha));
@@ -140,7 +137,7 @@ public class StatusBarUtil {
             return;
         }
         transparentStatusBar(activity);
-        ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+        ViewGroup contentView = activity.findViewById(android.R.id.content);
         // 移除半透明矩形,以免叠加
         View fakeStatusBarView = contentView.findViewById(FAKE_STATUS_BAR_VIEW_ID);
         if (fakeStatusBarView != null) {
@@ -532,6 +529,7 @@ public class StatusBarUtil {
     /**
      * 修改 MIUI V6  以上状态栏颜色
      */
+    @SuppressLint("PrivateApi")
     private static void setMIUIStatusBarDarkIcon(@NonNull Activity activity, boolean darkIcon) {
         Class<? extends Window> clazz = activity.getWindow().getClass();
         try {
@@ -589,7 +587,7 @@ public class StatusBarUtil {
      * @param statusBarAlpha 透明值
      */
     private static void addTranslucentView(Activity activity, @IntRange(from = 0, to = 255) int statusBarAlpha) {
-        ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+        ViewGroup contentView = activity.findViewById(android.R.id.content);
         View fakeTranslucentView = contentView.findViewById(FAKE_TRANSLUCENT_VIEW_ID);
         if (fakeTranslucentView != null) {
             if (fakeTranslucentView.getVisibility() == View.GONE) {
@@ -635,7 +633,7 @@ public class StatusBarUtil {
      * 设置根布局参数
      */
     private static void setRootView(Activity activity) {
-        ViewGroup parent = (ViewGroup) activity.findViewById(android.R.id.content);
+        ViewGroup parent = activity.findViewById(android.R.id.content);
         for (int i = 0, count = parent.getChildCount(); i < count; i++) {
             View childView = parent.getChildAt(i);
             if (childView instanceof ViewGroup) {

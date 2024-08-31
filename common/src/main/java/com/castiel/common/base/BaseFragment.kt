@@ -18,11 +18,11 @@ import com.castiel.common.dialog.LoadingDialog
 import com.castiel.common.widget.MultiStateView
 
 abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : Fragment() {
-    protected lateinit var mContext: Activity
+    private lateinit var mContext: Activity
 
     private var isDataInit = false
     protected lateinit var dataBinding: V
-    protected val viewModel: VM by lazy { ViewModelProvider(this)[this.initViewModel()] }
+    private val viewModel: VM by lazy { ViewModelProvider(this)[this.initViewModel()] }
 
     protected abstract fun initViewModel(): Class<VM>
     protected abstract fun initViewModelId(): Int?
@@ -38,7 +38,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : Fragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mContext = activity!!
+        mContext = requireActivity()
         dataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false) as V
         dataBinding.lifecycleOwner = this
         ARouter.getInstance().inject(this)
@@ -50,6 +50,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : Fragment(
     protected open fun setStatusBar() {
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         loading = LoadingDialog(mContext)
@@ -76,14 +77,14 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : Fragment(
                     viewModel.toast.value = "重试"
                     initData()
                 }
-            viewModel.state.observe(this, Observer {
+            viewModel.state.observe(viewLifecycleOwner, Observer {
                 stateView.viewState = it
             })
         }
-        viewModel.toast.observe(this, Observer {
+        viewModel.toast.observe(viewLifecycleOwner, Observer {
             showToast(it)
         })
-        viewModel.loading.observe(this, Observer {
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
             if (it) {
                 loading?.show()
             } else {

@@ -89,8 +89,8 @@ class MockLocationActivity : BaseActivity<ActivityNaviBinding, BaseViewModel>(),
                         startNavi?.latLng?.let { start ->
                             MapDrawUtils.drawMarkerToMap(mBaiduMap, start, "marker_start.png")
                         }
-                        wayNaviList?.map {
-                            it.latLng?.let { latLng ->
+                        wayNaviList?.map { way ->
+                            way.latLng?.let { latLng ->
                                 MapDrawUtils.drawMarkerToMap(mBaiduMap, latLng, "marker_way.png")
                             }
                         }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
 import com.blankj.utilcode.util.ClickUtils
@@ -32,7 +33,7 @@ class NaviPopupWindow(context: Context) : PopupWindow(context) {
         //点击 back 键的时候，窗口会自动消失
         setBackgroundDrawable(BitmapDrawable())
 
-        LayoutInflater.from(context).inflate(R.layout.popupwindow_navi_setting, null, false).apply {
+        LayoutInflater.from(context).inflate(R.layout.popupwindow_navi_setting, FrameLayout(context), false).apply {
             contentView = this
             tvSpeed = findViewById(R.id.tv_speed)
             seekBar = findViewById(R.id.seekbar)

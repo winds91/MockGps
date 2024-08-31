@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
-import androidx.annotation.Nullable
 import com.castiel.common.R
 
 class MultiStateView @JvmOverloads constructor(
@@ -93,7 +92,6 @@ class MultiStateView @JvmOverloads constructor(
      * @param state The [com.kennyc.view.MultiStateView.ViewState] with to return the view for
      * @return The [View] associated with the [com.kennyc.view.MultiStateView.ViewState], null if no view is present
      */
-    @Nullable
     fun getView(state: ViewState): View? {
         return when (state) {
             ViewState.LOGIN -> loginView
@@ -305,7 +303,7 @@ class MultiStateView @JvmOverloads constructor(
      *
      * @param previousView The view that it was currently on
      */
-    private fun animateLayoutChange(@Nullable previousView: View?) {
+    private fun animateLayoutChange(previousView: View?) {
         if (previousView == null) {
             requireNotNull(getView(viewState)).visibility = View.VISIBLE
             return
@@ -314,7 +312,7 @@ class MultiStateView @JvmOverloads constructor(
         ObjectAnimator.ofFloat(previousView, "alpha", 1.0f, 0.0f).apply {
             duration = 250L
             addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationStart(animation: Animator?) {
+                override fun onAnimationStart(animation: Animator) {
                     previousView.visibility = View.VISIBLE
                 }
 

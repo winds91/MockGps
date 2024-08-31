@@ -168,7 +168,7 @@ class CalculateRouteActivity : BaseActivity<ActivityCalculateRouteBinding, BaseV
                 }
 
                 if (stNode == null || enNode == null) {
-                    ToastUtils.showShort("起终点不能null")
+                    ToastUtils.showShort("起终点不能为空")
                     return
                 }
                 mBaiduMap.clear()
@@ -205,7 +205,7 @@ class CalculateRouteActivity : BaseActivity<ActivityCalculateRouteBinding, BaseV
 
             dataBinding.btnSaveFile -> {
                 if (routeLines.isEmpty() || mainIndex < 0 || mainIndex >= routeLines.size) {
-                    ToastUtils.showShort("数据列表为null！，无法保存")
+                    ToastUtils.showShort("数据列表为空！，无法保存")
                     return
                 }
                 val convertLatLngList = MapConvertUtils.convertLatLngList(routeLines[mainIndex])

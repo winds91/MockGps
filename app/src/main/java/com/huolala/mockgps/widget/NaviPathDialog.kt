@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,7 +34,7 @@ class NaviPathDialog(context: Context) : Dialog(context),
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         val view =
-            LayoutInflater.from(context).inflate(R.layout.dialog_navi_path, null, false).apply {
+            LayoutInflater.from(context).inflate(R.layout.dialog_navi_path, ConstraintLayout(context), false).apply {
                 recycler = findViewById(R.id.recycler)
                 btnConfirm = findViewById(R.id.btn_delete_all)
                 btnCancel = findViewById(R.id.btn_cancel)

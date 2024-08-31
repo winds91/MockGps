@@ -14,6 +14,7 @@ import com.huolala.mockgps.model.PoiInfoModel
 /**
  * @author jiayu.liu
  */
+@SuppressLint("NotifyDataSetChanged")
 class MultiplePoiAdapter : RecyclerView.Adapter<MultiplePoiAdapter.ViewHolder>() {
     var list: MutableList<PoiInfoModel> = arrayListOf()
     var clickListener: OnItemClickListener? = null

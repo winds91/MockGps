@@ -1,14 +1,13 @@
 package com.huolala.mockgps.adaper
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.huolala.mockgps.R
 import com.huolala.mockgps.databinding.LayoutMainCardHeaderBinding
@@ -20,12 +19,14 @@ import kotlinx.android.synthetic.main.item_history.view.tv_info
 import kotlinx.android.synthetic.main.item_history.view.tv_poi_name
 import java.util.ArrayList
 import java.util.Collections
+import java.util.Locale
 
 
 /**
  * @author jiayu.liu
  */
 @Suppress("UNREACHABLE_CODE")
+@SuppressLint("NotifyDataSetChanged")
 class MainAdapter(val headerAdapter: MultiplePoiAdapter) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var dataBinding: LayoutMainCardHeaderBinding
@@ -139,6 +140,7 @@ class MainAdapter(val headerAdapter: MultiplePoiAdapter) :
                 NaviType.LOCATION -> {
                     holder.itemView.tv_poi_name.text = model.locationModel?.name ?: ""
                     holder.itemView.tv_info.text = String.format(
+                        Locale.ROOT,
                         "经纬度：%f , %f",
                         model.locationModel?.latLng?.longitude ?: 0f,
                         model.locationModel?.latLng?.latitude ?: 0f

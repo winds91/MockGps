@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.baidu.mapapi.map.BaiduMap
 import com.baidu.mapapi.map.Overlay
 import com.baidu.mapapi.model.LatLng
@@ -41,7 +42,7 @@ class MapSelectDialog(
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
 
-        layoutInflater.inflate(R.layout.dialog_select_navi_map, null, false).apply {
+        layoutInflater.inflate(R.layout.dialog_select_navi_map, ConstraintLayout(context), false).apply {
             setContentView(this)
         }
 

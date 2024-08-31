@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="HardcodedText">
 
     <data>
 
@@ -20,7 +22,9 @@
             android:hint="速度必须大于0"
             android:inputType="number|numberDecimal"
             android:textColor="@color/master_color_50"
+            android:textColorHint="@color/black_50"
             android:textSize="15sp"
+            android:theme="@style/editTextStyle"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/tv_unit"
             app:layout_constraintTop_toTopOf="parent" />
