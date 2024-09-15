@@ -59,12 +59,15 @@ class MyApp : BaseApp() {
     }
 
 
-    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     private fun initReceiver() {
         mMockReceiver = MockReceiver()
         val intentFilter = IntentFilter()
         intentFilter.addAction(this.packageName + ".navi")
-        registerReceiver(mMockReceiver, intentFilter)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            registerReceiver(mMockReceiver, intentFilter, RECEIVER_NOT_EXPORTED)
+        } else {
+            registerReceiver(mMockReceiver, intentFilter)
+        }
 //        mMockReceiver is missing RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED flag for unprotected broadcasts registered for packageName.navi
     }
 }
