@@ -40,6 +40,11 @@ class FileMockActivity : BaseActivity<ActivityFileBinding, BaseViewModel>(), Vie
     override fun initView() {
         KeyboardUtils.clickBlankArea2HideSoftInput()
 
+        setSupportActionBar(dataBinding.toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 显示返回按钮
+        dataBinding.toolbar.setNavigationOnClickListener {
+            onBackPressed() // 或者在这里添加返回按钮点击后的操作
+        }
 
         ClickUtils.applySingleDebouncing(dataBinding.ivNaviSetting, this)
         ClickUtils.applySingleDebouncing(dataBinding.ivWarning, this)

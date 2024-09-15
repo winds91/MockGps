@@ -34,6 +34,11 @@ class SettingActivity : BaseActivity<ActivitySettingBinding, BaseViewModel>() {
     }
 
     override fun initView() {
+        setSupportActionBar(dataBinding.toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 显示返回按钮
+        dataBinding.toolbar.setNavigationOnClickListener {
+            onBackPressed() // 或者在这里添加返回按钮点击后的操作
+        }
         dataBinding.recycler.layoutManager = LinearLayoutManager(this)
         mAdapter = SettingAdapter()
         dataBinding.recycler.adapter = mAdapter

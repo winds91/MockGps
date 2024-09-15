@@ -5,7 +5,10 @@
     tools:ignore="HardcodedText,SmallSp">
 
     <data>
-
+        <import type="android.view.View.OnClickListener" />
+        <variable
+            name="clicklistener"
+            type="OnClickListener" />
         <variable
             name="fileName"
             type="String" />
@@ -24,6 +27,19 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            clickListener="@{clicklistener}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_round_5_color_white"
+            android:elevation="3dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_panel"
@@ -34,7 +50,7 @@
             android:padding="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/iv_back">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_start"

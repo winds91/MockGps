@@ -28,13 +28,6 @@ class ExpandActivity : BaseActivity<ActivityExpandBinding, BaseViewModel>() {
         "github地址",
         "免责声明",
     )
-    private val describes = arrayOf(
-        "通过广播形式发送起终点信息",
-        "模拟功能设置，扩展功能",
-        "路径：/storage/emulated/0/Android/data/com.huolala.mockgps/files/nav_path",
-        "https://github.com/liujiayu5566/MockGps",
-        "此应用仅限开发学习和开发使用，软件的发布和使用均不收取任何费用。拒绝任何人或任何实体进行出售、重新修改后分发，严禁用于商业谋利用途。项目维护者对软件的滥用不承担任何责任。",
-    )
     private val navigation = arrayOf(
         null,
         SettingActivity::class.java,
@@ -54,6 +47,11 @@ class ExpandActivity : BaseActivity<ActivityExpandBinding, BaseViewModel>() {
 
 
     override fun initView() {
+        setSupportActionBar(dataBinding.toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 显示返回按钮
+        dataBinding.toolbar.setNavigationOnClickListener {
+            onBackPressed() // 或者在这里添加返回按钮点击后的操作
+        }
         dataBinding.recycler.layoutManager = LinearLayoutManager(this);
         dataBinding.recycler.adapter = mExpandAdapter;
         dataBinding.recycler.addItemDecoration(
@@ -74,7 +72,7 @@ class ExpandActivity : BaseActivity<ActivityExpandBinding, BaseViewModel>() {
                             HintDialog(
                                 this@ExpandActivity,
                                 "外部广播",
-                                getString(R.string.receiver_hint)
+                                String.format(getString(R.string.receiver_hint), packageName)
                             ).show()
                         }
 
@@ -90,6 +88,13 @@ class ExpandActivity : BaseActivity<ActivityExpandBinding, BaseViewModel>() {
     }
 
     override fun initData() {
+        val describes = arrayOf(
+            "通过广播形式发送起终点信息",
+            "模拟功能设置，扩展功能",
+            String.format("路径：%s", getExternalFilesDir("nav_path")),
+            "https://github.com/liujiayu5566/MockGps",
+            "此应用仅限开发学习和开发使用，软件的发布和使用均不收取任何费用。拒绝任何人或任何实体进行出售、重新修改后分发，严禁用于商业谋利用途。项目维护者对软件的滥用不承担任何责任。",
+        )
         //初始化数据
         for (i in titles.indices) {
             mExpandData.add(

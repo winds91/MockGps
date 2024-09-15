@@ -63,8 +63,8 @@ class MyApp : BaseApp() {
     private fun initReceiver() {
         mMockReceiver = MockReceiver()
         val intentFilter = IntentFilter()
-        intentFilter.addAction("com.huolala.mockgps.navi")
+        intentFilter.addAction(this.packageName + ".navi")
         registerReceiver(mMockReceiver, intentFilter)
-//        mMockReceiver is missing RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED flag for unprotected broadcasts registered for com.huolala.mockgps.navi
+//        mMockReceiver is missing RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED flag for unprotected broadcasts registered for packageName.navi
     }
 }

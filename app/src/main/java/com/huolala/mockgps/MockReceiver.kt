@@ -8,7 +8,6 @@ import android.text.TextUtils
 import android.widget.Toast
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.route.DrivingRouteLine
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.huolala.mockgps.manager.FloatingViewManger
 import com.huolala.mockgps.manager.SearchManager
@@ -25,7 +24,7 @@ import com.huolala.mockgps.utils.Utils
  * @author jiayu.liu
  *
  *  Intent intentBroadcast = new Intent();
- *  intentBroadcast.setAction("com.huolala.mockgps.navi");
+ *  intentBroadcast.setAction("packageName.navi");
  *  intentBroadcast.putExtra("start", "116.419431,40.028795");
  *  intentBroadcast.putExtra("end", "116.409816,40.05139");
  *  //bd09   gps84   gcj02
@@ -35,16 +34,12 @@ import com.huolala.mockgps.utils.Utils
  */
 class MockReceiver : BroadcastReceiver() {
 
-    companion object {
-        var MOCK_ACTION = "com.huolala.mockgps.navi"
-    }
-
     override fun onReceive(context: Context?, intent: Intent) {
         if (context == null) {
             return
         }
         val action = intent.action
-        if (MOCK_ACTION != action) {
+        if (context.packageName+".navi" != action) {
             return
         }
         val event = intent.getStringExtra("event")

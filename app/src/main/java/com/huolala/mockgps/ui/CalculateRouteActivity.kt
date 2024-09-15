@@ -100,6 +100,7 @@ class CalculateRouteActivity : BaseActivity<ActivityCalculateRouteBinding, BaseV
     }
 
     override fun initView() {
+        dataBinding.clicklistener = this
         initMap()
 
         System.currentTimeMillis()
@@ -109,6 +110,7 @@ class CalculateRouteActivity : BaseActivity<ActivityCalculateRouteBinding, BaseV
         ClickUtils.applySingleDebouncing(dataBinding.btnChange, this)
         ClickUtils.applySingleDebouncing(dataBinding.btnStartRoute, this)
         ClickUtils.applySingleDebouncing(dataBinding.btnSaveFile, this)
+        ClickUtils.applySingleDebouncing(dataBinding.ivBack, this)
     }
 
 
@@ -229,6 +231,10 @@ class CalculateRouteActivity : BaseActivity<ActivityCalculateRouteBinding, BaseV
                         }
                     }
                 }
+            }
+
+            dataBinding.ivBack -> {
+                finish()
             }
 
             else -> {
