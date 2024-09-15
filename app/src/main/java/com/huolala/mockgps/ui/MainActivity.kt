@@ -247,7 +247,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, HomeViewModel>(), View.On
 
     override fun initData() {
         //检测是否有新版本
-        viewModel.checkAppUpdate()
+        //viewModel.checkAppUpdate()
     }
 
     override fun initObserver() {
