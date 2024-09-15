@@ -22,7 +22,7 @@ public class LocationUtils {
     public static double[] bd09ToGcj02(double lng, double lat) {
         double x = lng - 0.0065;
         double y = lat - 0.006;
-        double z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * X_PI);
+        double z = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) - 0.00002 * Math.sin(y * X_PI);
         double theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * X_PI);
         double gg_lng = z * Math.cos(theta);
         double gg_lat = z * Math.sin(theta);
@@ -140,7 +140,7 @@ public class LocationUtils {
      */
     public static double[] wgs84ToMercator(double lng, double lat) {
         double x = lng * 20037508.34D / 180.0;
-        double y = Math.log(Math.tan((90.0 + lat) * Math.PI / 360.0)) / (Math.PI / 180.);
+        double y = Math.log(Math.tan((90.0 + lat) * Math.PI / 360.0)) / (Math.PI / 180.0);
         y = y * 20037508.34D / 180.0;
         return new double[]{x, y};
     }

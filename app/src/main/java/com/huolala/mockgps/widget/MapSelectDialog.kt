@@ -110,11 +110,11 @@ class MapSelectDialog(
         }
     }
 
-    public fun onResume() {
+    fun onResume() {
         texture_mapview.onResume()
     }
 
-    public fun onPause() {
+    fun onPause() {
         texture_mapview.onPause()
     }
 

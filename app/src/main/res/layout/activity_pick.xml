@@ -183,7 +183,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:includeFontPadding="false"
-                        android:maxLines="2"
                         android:text=""
                         android:textColor="@color/master_color_50"
                         android:textSize="13sp" />

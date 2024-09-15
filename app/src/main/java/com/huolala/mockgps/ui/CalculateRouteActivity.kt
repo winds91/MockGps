@@ -38,7 +38,7 @@ class CalculateRouteActivity : BaseActivity<ActivityCalculateRouteBinding, BaseV
      * 算路成功的路线
      */
     private var routeLines: ArrayList<DrivingRouteLine> = arrayListOf()
-    private val mSearchManagerListener  = object : SearchManager.SearchManagerListener {
+    private val mSearchManagerListener = object : SearchManager.SearchManagerListener {
         override fun onDrivingRouteResultLines(routeLines: List<DrivingRouteLine>?) {
             viewModel.loading.value = false
             if (routeLines?.isEmpty() != false) {
@@ -76,7 +76,7 @@ class CalculateRouteActivity : BaseActivity<ActivityCalculateRouteBinding, BaseV
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
                 it.data?.run {
-                    setDataToView(getParcelableExtra<PoiInfoModel>("poiInfo"), dataBinding.tvStart)
+                    setDataToView(getParcelableExtra("poiInfo"), dataBinding.tvStart)
                 }
             }
         }
@@ -86,7 +86,7 @@ class CalculateRouteActivity : BaseActivity<ActivityCalculateRouteBinding, BaseV
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
                 it.data?.run {
-                    setDataToView(getParcelableExtra<PoiInfoModel>("poiInfo"), dataBinding.tvEnd)
+                    setDataToView(getParcelableExtra("poiInfo"), dataBinding.tvEnd)
                 }
             }
         }

@@ -58,7 +58,7 @@ class MockReceiver : BroadcastReceiver() {
         val start = intent.getStringExtra("start")
         val end = intent.getStringExtra("end")
         val type = intent.getStringExtra("type") ?: LocationUtils.gcj02
-        LogUtils.dTag("mock", "mockGps接收到模拟定位广播-> start=$start , end=$end , type=$type")
+        //LogUtils.dTag("mock", "mockGps接收到模拟定位广播-> start=$start , end=$end , type=$type")
         Utils.checkFloatWindow(context).let {
             if (!it) {
                 ToastUtils.showShort("悬浮窗权限未开启，请返回app开启权限！")

@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ToastUtils
@@ -77,14 +76,14 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : Fragment(
                     viewModel.toast.value = "重试"
                     initData()
                 }
-            viewModel.state.observe(viewLifecycleOwner, Observer {
+            viewModel.state.observe(viewLifecycleOwner, {
                 stateView.viewState = it
             })
         }
-        viewModel.toast.observe(viewLifecycleOwner, Observer {
+        viewModel.toast.observe(viewLifecycleOwner, {
             showToast(it)
         })
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
+        viewModel.loading.observe(viewLifecycleOwner, {
             if (it) {
                 loading?.show()
             } else {

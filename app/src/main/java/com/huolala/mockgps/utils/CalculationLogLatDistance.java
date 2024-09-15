@@ -74,9 +74,8 @@ public class CalculationLogLatDistance {
                         B / 6 * cos2SigmaM * (-3 + 4 * Math.pow(sinSigma, 2)) *
                                 (-3 + 4 * Math.pow(cos2SigmaM, 2))));
 
-        double s = b * A * (sigma - deltaSigma);
         // 距离，单位：米
-        return s;
+        return b * A * (sigma - deltaSigma);
     }
 
     /**
@@ -139,7 +138,7 @@ public class CalculationLogLatDistance {
         double sigma = dist / (b * A);
         double sigmaP = 2 * Math.PI;
 
-        double cos2SigmaM = 0, sinSigma = 0, cosSigma = 0, deltaSigma = 0;
+        double cos2SigmaM = 0, sinSigma = 0, cosSigma = 0, deltaSigma;
 
         while (Math.abs(sigma - sigmaP) > 1e-12) {
             cos2SigmaM = Math.cos(2 * sigma1 + sigma);
@@ -153,7 +152,7 @@ public class CalculationLogLatDistance {
 
         double tmp = sinU1 * sinSigma - cosU1 * cosSigma * cosAlpha1;
         double lat2 = Math.atan2(sinU1 * cosSigma + cosU1 * sinSigma * cosAlpha1,
-                (1 - f) * Math.sqrt(sinAlpha * sinAlpha + tmp * tmp));
+                (1 - f) * Math.sqrt(Math.pow(sinAlpha, 2) + Math.pow(tmp, 2)));
         double lambda = Math.atan2(sinSigma * sinAlpha1,
                 cosU1 * cosSigma - sinU1 * sinSigma * cosAlpha1);
         double C = f / 16 * cos2Alpha * (4 + f * (4 - 3 * cos2Alpha));

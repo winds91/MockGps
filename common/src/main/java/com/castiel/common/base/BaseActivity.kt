@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.KeyboardUtils
@@ -65,14 +64,14 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : AppCompat
                     viewModel.toast.value = "重试"
                     initData()
                 }
-            viewModel.state.observe(this, Observer {
+            viewModel.state.observe(this, {
                 stateView.viewState = it
             })
         }
-        viewModel.toast.observe(this, Observer {
+        viewModel.toast.observe(this, {
             showToast(it)
         })
-        viewModel.loading.observe(this, Observer {
+        viewModel.loading.observe(this, {
             if (it) {
                 loading?.show()
             } else {

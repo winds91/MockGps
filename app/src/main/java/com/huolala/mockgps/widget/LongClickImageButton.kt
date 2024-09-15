@@ -1,5 +1,6 @@
 package com.huolala.mockgps.widget
 
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Context
 import android.os.Build
@@ -54,6 +55,7 @@ class LongClickImageButton : AppCompatImageButton {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
             MotionEvent.ACTION_UP -> {
