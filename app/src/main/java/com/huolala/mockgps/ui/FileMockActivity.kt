@@ -3,6 +3,7 @@ package com.huolala.mockgps.ui
 import android.content.Intent
 import android.text.TextUtils
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.baidu.mapapi.model.LatLng
 import com.blankj.utilcode.util.ClickUtils
 import com.blankj.utilcode.util.FileIOUtils
@@ -42,6 +43,12 @@ class FileMockActivity : BaseActivity<ActivityFileBinding, BaseViewModel>(), Vie
 
         setSupportActionBar(dataBinding.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 显示返回按钮
+        supportActionBar!!.setHomeAsUpIndicator(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.ic_back_light
+            )
+        )  // 设置返回按钮图标
         dataBinding.toolbar.setNavigationOnClickListener {
             onBackPressed() // 或者在这里添加返回按钮点击后的操作
         }

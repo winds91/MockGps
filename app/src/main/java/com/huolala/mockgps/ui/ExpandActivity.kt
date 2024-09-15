@@ -2,6 +2,7 @@ package com.huolala.mockgps.ui
 
 import android.content.Intent
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -14,6 +15,7 @@ import com.huolala.mockgps.adaper.ExpandAdapter
 import com.huolala.mockgps.databinding.ActivityExpandBinding
 import com.huolala.mockgps.model.ExpandModel
 import com.huolala.mockgps.widget.HintDialog
+
 
 /**
  * @author jiayu.liu
@@ -49,6 +51,12 @@ class ExpandActivity : BaseActivity<ActivityExpandBinding, BaseViewModel>() {
     override fun initView() {
         setSupportActionBar(dataBinding.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) // 显示返回按钮
+        supportActionBar!!.setHomeAsUpIndicator(
+            ContextCompat.getDrawable(
+                this,
+                R.drawable.ic_back_light
+            )
+        )  // 设置返回按钮图标
         dataBinding.toolbar.setNavigationOnClickListener {
             onBackPressed() // 或者在这里添加返回按钮点击后的操作
         }
