@@ -21,8 +21,14 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class com.baidu.** {*;}
--keep class vi.com.** {*;}
--keep class com.baidu.vi.** {*;}
 -dontwarn com.baidu.**
+-keep class vi.com.** {*;}
+-dontwarn vi.com.**
 -keep class javax.lang.model.element.** {*;}
 -dontwarn javax.lang.model.element.**
+-keepnames class com.alibaba.android.arouter.** {*;}
+-keep public class com.alibaba.android.arouter.** {*;}
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
+-keepattributes Signature
+-keepattributes AnnotationDefault,RuntimeVisibleAnnotations
