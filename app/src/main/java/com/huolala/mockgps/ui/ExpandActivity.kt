@@ -27,8 +27,8 @@ class ExpandActivity : BaseActivity<ActivityExpandBinding, BaseViewModel>() {
         "外部app启动模拟导航",
         "模拟功能设置",
         "模拟导航数据导入",
-        "github地址",
-        "免责声明",
+        //"github地址",
+        //"免责声明",
     )
     private val navigation = arrayOf(
         null,

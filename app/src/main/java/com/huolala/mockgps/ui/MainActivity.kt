@@ -1,7 +1,6 @@
 package com.huolala.mockgps.ui
 
 import android.Manifest
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -22,6 +21,7 @@ import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.castiel.common.base.BaseActivity
+import com.google.android.material.appbar.AppBarLayout
 import com.huolala.mockgps.R
 import com.huolala.mockgps.adaper.MainAdapter
 import com.huolala.mockgps.adaper.MultiplePoiAdapter
@@ -212,7 +212,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, HomeViewModel>(), View.On
             }
         }
 
-        dataBinding.appBarLayout.addOnOffsetChangedListener {appBarLayout, verticalOffset ->
+        dataBinding.appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             appBarLayout?.run {
                 val scale = abs(verticalOffset * 1.0f / appBarLayout.totalScrollRange)
                 val params = dataBinding.recycler.layoutParams as ViewGroup.MarginLayoutParams
@@ -221,7 +221,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, HomeViewModel>(), View.On
                 params.topMargin = topMarginOffsetValue + topMarginValue
                 dataBinding.recycler.layoutParams = params
             }
-        }
+        })
     }
 
     private fun goToMockLocation(
