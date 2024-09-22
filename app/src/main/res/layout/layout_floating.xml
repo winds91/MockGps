@@ -57,10 +57,22 @@
             android:padding="5dp"
             android:src="@drawable/ic_location_adjust"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/iv_hidden"
             app:layout_constraintLeft_toLeftOf="@id/info_guideline"
             app:layout_constraintRight_toRightOf="@id/info_guideline"
             app:layout_constraintTop_toBottomOf="@id/iv_rest"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_hidden"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:src="@drawable/ic_floating_adjust_close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/info_guideline"
+            app:layout_constraintRight_toRightOf="@id/info_guideline"
+            app:layout_constraintTop_toBottomOf="@id/iv_adjust"
             tools:visibility="visible" />
 
 

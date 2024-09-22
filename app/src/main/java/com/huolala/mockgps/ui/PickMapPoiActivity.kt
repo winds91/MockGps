@@ -33,6 +33,7 @@ import com.huolala.mockgps.databinding.ActivityPickBinding
 import com.huolala.mockgps.manager.FollowMode
 import com.huolala.mockgps.manager.MapLocationManager
 import com.huolala.mockgps.model.PoiInfoType
+import com.huolala.mockgps.widget.InputLatLngDialog
 import kotlinx.android.synthetic.main.activity_pick.*
 import java.lang.ref.WeakReference
 import java.util.Locale
@@ -47,12 +48,14 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
     private val DEFAULT_DELAYED: Long = 100
     private lateinit var mBaiduMap: BaiduMap
     private lateinit var mCoder: GeoCoder
+    private var mInputLatLngDialog: InputLatLngDialog? = null
     private var poiListAdapter: PoiListAdapter = PoiListAdapter()
     private var mPoiInfoModel: PoiInfoModel? = null
     private var mSuggestionSearch: SuggestionSearch = SuggestionSearch.newInstance()
     private var mHandler: PickMapPoiHandler? = null
     private var mapLocationManager: MapLocationManager? = null
     private var mIndex = -1
+    private var mInputLatLngText = ""
 
     @PoiInfoType
     private var poiInfoType: Int = PoiInfoType.DEFAULT
@@ -177,33 +180,36 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
                             this@PickMapPoiActivity,
                             "逆地理编码失败：" + error,
                             Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        ).show()
                         return
                     }
+                    var name: String? = null
 
-                    //详细地址
-                    reverseGeoCodeResult.poiList?.run {
-                        if (isNotEmpty()) {
-                            val poiInfo = get(0)
-                            mPoiInfoModel = PoiInfoModel(
-                                location,
-                                poiInfo?.uid,
-                                poiInfo?.name,
-                                poiInfoType
-                            )
-                            var name = poiInfo?.name ?: ""
-                            if (poiInfo?.address != null && poiInfo.address.isNotEmpty()) {
-                                name += ("(" + poiInfo.address + ")")
-                            }
-                            tv_poi_name.text = name
-                            val latLng = mPoiInfoModel?.latLng
-                            tv_lonlat.text = String.format(
-                                Locale.ROOT,
-                                "经纬度：%f, %f", (latLng?.longitude ?: 0f), (latLng?.latitude ?: 0f)
-                            )
+                    poiRegionsInfoList?.get(0)?.run {
+                        name = regionName
+                    }
+
+                    if (TextUtils.isEmpty(name)) {
+                        name =
+                            if (!TextUtils.isEmpty(sematicDescription)) sematicDescription
+                            else if (!TextUtils.isEmpty(address)) address else "未知地址"
+                    } else {
+                        if (!TextUtils.isEmpty(address) && !name.equals(address)) {
+                            name += ("($address)")
                         }
                     }
+
+                    mPoiInfoModel = PoiInfoModel(
+                        location,
+                        location.toString(),
+                        name,
+                        poiInfoType
+                    )
+                    tv_poi_name.text = name
+                    tv_lonlat.text = String.format(
+                        Locale.ROOT,
+                        "经纬度：%f, %f", (location?.longitude ?: 0f), (location?.latitude ?: 0f)
+                    )
                 }
             }
         })
@@ -328,6 +334,20 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
 
             R.id.iv_back -> {
                 finish()
+            }
+
+            R.id.tv_input -> {
+                mInputLatLngDialog?.dismiss()
+                mInputLatLngDialog =
+                    InputLatLngDialog(this, object : InputLatLngDialog.InputLatLngDialogListener {
+                        override fun onConfirm(latLng: LatLng, text: String) {
+                            changeCenterLatLng(latLng.latitude, latLng.longitude)
+                            this@PickMapPoiActivity.mInputLatLngText = text
+                        }
+                        override fun onDismiss(text: String) {
+                            this@PickMapPoiActivity.mInputLatLngText = text
+                        }
+                    }, this@PickMapPoiActivity.mInputLatLngText).apply { show() }
             }
 
             else -> {

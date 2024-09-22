@@ -21,8 +21,9 @@ class InputSpeed(context: Context) : Dialog(context) {
         DataBindingUtil.bind<DialogInputSpeedBinding>(
             LayoutInflater.from(context)
                 .inflate(R.layout.dialog_input_speed, null, false)
-        )?.let { it ->
+        )?.let {
             setContentView(it.root)
+            it.editSpeed.setText(MMKVUtils.getSpeed().toString())
             window?.run {
                 setBackgroundDrawableResource(R.color.transparent);
                 val lp = attributes;

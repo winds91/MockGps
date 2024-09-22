@@ -163,6 +163,13 @@ class FloatingViewManger private constructor() {
             }
         }
 
+        //隐藏悬浮窗
+        ClickUtils.applySingleDebouncing(view?.iv_hidden) {
+            if (view?.startAndPause?.isSelected == false) {
+                onDestroy()
+            }
+        }
+
         HandlerUtils.INSTANCE.postDelayed(settingViewRunnable, 5000)
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M
@@ -448,6 +455,7 @@ class FloatingViewManger private constructor() {
             else -> {}
         }
         view?.iv_adjust?.visibility = View.VISIBLE
+        view?.iv_hidden?.visibility = View.GONE
     }
 
     /**
@@ -456,6 +464,7 @@ class FloatingViewManger private constructor() {
     fun stopMock() {
         view?.startAndPause?.isSelected = false
         view?.iv_adjust?.visibility = View.GONE
+        view?.iv_hidden?.visibility = View.VISIBLE
     }
 
     fun stopMockFromReceiver() {
