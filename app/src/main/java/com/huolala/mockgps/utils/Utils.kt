@@ -27,7 +27,7 @@ object Utils {
     @SuppressLint("WrongConstant")
     fun isAllowMockLocation(context: Context): Boolean {
         var canMockPosition: Boolean
-        if (Build.VERSION.SDK_INT <= 22) { //6.0以下
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) { //6.0以下
             canMockPosition = Settings.Secure.getInt(
                 context.applicationContext.getContentResolver(),
                 Settings.Secure.ALLOW_MOCK_LOCATION,

@@ -5,13 +5,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.IntentFilter
 import android.os.Build
+import androidx.multidex.MultiDex
 import com.baidu.location.LocationClient
 import com.baidu.mapapi.CoordType
 import com.baidu.mapapi.SDKInitializer
 import com.baidu.mapapi.map.OverlayUtil
 import com.blankj.utilcode.util.Utils
 import com.castiel.common.BaseApp
-import me.weishu.reflection.Reflection
+//import me.weishu.reflection.Reflection
 import java.lang.reflect.Field
 
 
@@ -22,7 +23,8 @@ class MyApp : BaseApp() {
     private lateinit var mMockReceiver: MockReceiver
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-        Reflection.unseal(base)
+        //Reflection.unseal(base)
+        MultiDex.install(base);
         reflectionValueAnimator()
     }
 
