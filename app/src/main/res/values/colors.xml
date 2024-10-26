@@ -15,4 +15,5 @@
     <color name="n_black_50">#80000000</color>
     <color name="n_black_80">#CC000000</color>
     <color name="n_background_color">#FFFFFFFF</color>
+    <color name="n_bsb_track_color">#444444</color>
 </resources>

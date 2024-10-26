@@ -35,9 +35,10 @@
 
         </FrameLayout>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -45,24 +46,28 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_gravity="start"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="10dp"
                 android:text="@string/poi_list_history_hint"
                 android:textSize="15sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/btn_history_clear"
+                android:id="@+id/tv_clean_cache"
                 style="@style/title_style"
                 clickListener="@{clickListener}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="10dp"
-                android:paddingHorizontal="15dp"
-                android:paddingVertical="10dp"
-                android:text="清除"
-                android:textSize="15sp" />
-        </LinearLayout>
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/shape_round_10_color_red_stroke"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp"
+                android:text="清空"
+                android:textColor="@color/red"
+                android:textSize="10sp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

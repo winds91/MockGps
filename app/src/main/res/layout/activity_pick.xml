@@ -14,6 +14,10 @@
             name="isShowSearch"
             type="Boolean" />
 
+        <variable
+            name="city"
+            type="String" />
+
         <import type="android.view.View" />
 
         <import type="android.view.View.OnClickListener" />
@@ -102,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:background="@color/grey_50"
-                    android:text="北京"
+                    android:text="@{city,default=北京}"
                     android:textColor="@color/black"
                     android:visibility="gone" />
 

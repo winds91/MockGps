@@ -36,11 +36,12 @@ class SettingAdapter : RecyclerView.Adapter<SettingAdapter.ViewHolder>() {
         viewHolder.dataBinding.isSwitch = model.isSwitch
         viewHolder.dataBinding.title = model.title
         viewHolder.dataBinding.msg = model.msg
+        viewHolder.dataBinding.listener = View.OnClickListener { listener?.onSettingClick(model) }
 
         viewHolder.dataBinding.swSwitch.setOnCheckedChangeListener { _, isChecked ->
             model.isSwitch = isChecked
             listener?.onItemSwitch(
-                viewHolder.dataBinding.root,
+                viewHolder.dataBinding,
                 model,
                 isChecked
             )
@@ -58,6 +59,12 @@ class SettingAdapter : RecyclerView.Adapter<SettingAdapter.ViewHolder>() {
         RecyclerView.ViewHolder(dataBinding.root)
 
     interface OnItemListener {
-        fun onItemSwitch(view: View?, model: SettingMsgModel, isChecked: Boolean)
+        fun onItemSwitch(
+            dataBinding: ItemSettingBinding?,
+            model: SettingMsgModel,
+            isChecked: Boolean
+        )
+
+        fun onSettingClick(model: SettingMsgModel)
     }
 }

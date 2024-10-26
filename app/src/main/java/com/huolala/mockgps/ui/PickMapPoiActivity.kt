@@ -112,7 +112,8 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
                         pt,
                         poiInfo.uid,
                         key,
-                        poiInfoType
+                        poiInfoType,
+                        city
                     )
                     tv_poi_name.text = key
                     tv_lonlat.text = String.format(
@@ -122,6 +123,7 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
                     editViewShow(false)
                     mHandler = null
                     changeCenterLatLng(pt.latitude, pt.longitude)
+                    dataBinding.city = city
                 }
             }
         })
@@ -198,12 +200,13 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
                             name += ("($address)")
                         }
                     }
-
+                    dataBinding.city = addressDetail?.city ?: "北京市"
                     mPoiInfoModel = PoiInfoModel(
                         location,
                         location.toString(),
                         name,
-                        poiInfoType
+                        poiInfoType,
+                        addressDetail?.city ?: "北京市"
                     )
                     tv_poi_name.text = name
                     tv_lonlat.text = String.format(
@@ -229,6 +232,7 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
                 mHandler = null
                 changeCenterLatLng(latitude, longitude)
                 follow = FollowMode.MODE_NONE
+                dataBinding.city = this@model.city
             }
         }
 
@@ -242,6 +246,7 @@ class PickMapPoiActivity : BaseActivity<ActivityPickBinding, BaseViewModel>(),
 
             override fun onMapStatusChangeStart(mapStatus: MapStatus?, reason: Int) {
                 mHandler?.removeMessages(REVERSE_GEO_CODE)
+                editViewShow(false)
             }
 
             override fun onMapStatusChange(mapStatus: MapStatus?) {

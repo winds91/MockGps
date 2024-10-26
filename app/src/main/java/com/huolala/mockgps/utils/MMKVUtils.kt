@@ -26,6 +26,9 @@ object MMKVUtils {
     //模拟定位震动功能开关
     const val KEY_LOCATION_VIBRATION: String = "KEY_LOCATION_VIBRATION"
 
+    //模拟定位震动功能范围，默认：10m
+    const val KEY_LOCATION_VIBRATION_VALUE: String = "KEY_LOCATION_VIBRATION_VALUE"
+
     //模拟导航绑路开关
     const val KEY_NAVI_ROUTE_BINDING: String = "KEY_NAVI_ROUTE_BINDING"
 
@@ -68,7 +71,7 @@ object MMKVUtils {
      * 清除历史记录
      */
     fun clearDataList(key: String) {
-        defaultMMKV?.putString(key, "[]")
+        defaultMMKV?.remove(key)
     }
 
     private fun checkMockMessageModelIsExist(
@@ -145,6 +148,20 @@ object MMKVUtils {
             e.printStackTrace()
             false
         }
+    }
+
+    /**
+     * 设置模拟定位震动模式参数
+     */
+    fun setLocationVibrationValue(value: Int) {
+        defaultMMKV?.putInt(KEY_LOCATION_VIBRATION_VALUE, value)
+    }
+
+    /**
+     * 获取模拟定位震动模式参数
+     */
+    fun getLocationVibrationValue(): Int {
+        return defaultMMKV?.getInt(KEY_LOCATION_VIBRATION_VALUE, 10) ?: 10
     }
 
     /**

@@ -37,7 +37,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.release
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [MAP_KEY: rootProject.ext.android.map_key]
         }
