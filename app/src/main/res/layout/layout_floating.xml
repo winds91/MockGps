@@ -97,7 +97,8 @@
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:radius="50dp">
 
         <com.baidu.mapapi.map.TextureMapView
             android:id="@+id/mapview"

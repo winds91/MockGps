@@ -57,7 +57,6 @@ dependencies {
     api rootProject.ext.dependencies.chips_layout
     api rootProject.ext.dependencies.utilcodex
     api rootProject.ext.dependencies.mmkv
-    api rootProject.ext.dependencies.bugly
     api rootProject.ext.dependencies.bubbleseekbar
 
     api rootProject.ext.dependencies.glide
